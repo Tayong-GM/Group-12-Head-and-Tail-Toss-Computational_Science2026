@@ -59,7 +59,7 @@ Summary of Findings
 Both the 5A (Old) and 5B (New) coins generally approached an approximately balanced distribution of Heads and Tails as the number of tosses increased,
 minor variations were observed between surface types (Wood vs. Tiles), suggesting that surface texture may slightly influence bounce behavior.
 The 5B (New) coin showed slightly more consistency across surfaces compared to the 5A (Old) coin,
-when combining class data, the overall distribution moved closer to theoretical probability (50% Heads, 50% Tails), demonstrating the Law of Large Numbers.
+when combining class data, the overall distribution moved closer to theoretical probability (50% Heads, 50% Tails).
 Surface comparison graphs indicate that while small biases may appear in smaller sample sizes, larger aggregated data reduces these deviations.
 Overall, results support the principle that coin toss outcomes tend toward fairness as sample size increases, while surface effects introduce only minor variations.
 
