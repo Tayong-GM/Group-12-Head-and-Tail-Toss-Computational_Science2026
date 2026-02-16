@@ -1,4 +1,4 @@
-<img width="1740" height="1055" alt="Grand_Surface_Comparison" src="https://github.com/user-attachments/assets/b3f547c6-0d77-46a6-a1b2-9963609891a6" /># Group-12-Head-and-Tail-Toss-Computational_Science2026
+# Group-12-Head-and-Tail-Toss-Computational_Science2026
 Group 12 Members: Ivan Arnoco, Van Joaquin Baguio, Ghabriell Tayong
 
 Coins:
