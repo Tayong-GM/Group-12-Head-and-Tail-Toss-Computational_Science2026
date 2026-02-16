@@ -1,0 +1,145 @@
+# aight this one generates 15 separate, individual graphs but DOES NOT COMBINE ALL GROUPS INTO ONE
+# ok nvm this code is fuckin wrong lmaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+
+import matplotlib.pyplot as plt
+import os
+
+# Create a folder to save all the images
+folder_name = "All_Group_Graphs"
+if not os.path.exists(folder_name):
+    os.makedirs(folder_name)
+
+# ================= MANUAL DATA ENTRY =================
+# The coin names (like "1B" or "5A") are already set for each group!
+# Just paste the string of 1s and 0s into the empty quotes "".
+
+group_data = {
+    "Group 1": {
+        "1B": "0100111000100001011101000001100110101100111111101001110001001011101111010111010100101000000001101101", 
+        "1A": "1010010100011101100100100101110100011000101101101000011100010011110110001010000110110111000011100000"
+    },
+    "Group 2": {
+        "1B": "0010111000100011111011001010100001111100010111001001011101101000110101010010110110010100011010111010", 
+        "5A": "1110011101010010000011110101011011000111000011100101101011111100101111001100100111010111000100010101"
+    },
+    "Group 3": {
+        "1B": "1110101110101110110101011010101111101010101011111101101010101111011010110101001110000000000000000000", 
+        "10A": "0010110110000010110010111101110000010000111001111110010101010101111111110010000001110101010101011100"
+    },
+    "Group 4": {
+        "5A": "0101001001011101111010100101000111001001011001110111001001000101010110011011101111001101110110000011", 
+        "5B": "0101101101011001101101011000110000110100001000110101011111001011011011001110111001010101000101111111"
+    },
+    "Group 5": {
+        "1A": "1101001010001011000001011110110100010101110000010010010100101000000101011110100000111110100100000101", 
+        "1B": "0101111010101101110111001111111011100110001001111010010010110001011100010001011011011101111101101010"
+    },
+    "Group 6": {
+        "5B": "1110110101100011100011010011000111010010000101101000110001101100010001101101110000100001010011001010", 
+        "20": "0011000101100110000010101010101000001010011000110011110011001100111010001001001011100011001111110111"
+    },
+    "Group 7": {
+        "5A": "1010110011011100010101000110000000000010111010010011110011011110110100110100001111010010010101010111", 
+        "10A": "1101000011001011000111111111110110000100010110110011010011000101001110011001100010100101001000011110"
+    },
+    "Group 8": {
+        "1A": "0101101101011001101101011000110000110100001000110101011111001011011011001110111001010101000101100011", 
+        "10B": "0101001001011101111010100101000111001001011001110111001001000101010110011011101111001101110110111011"
+    },
+    "Group 9": {
+        "5B": "1011100110110011011000110011001010000110011110001100110011100010011100010000011000011100001100111011", 
+        "1B": "0011010110011100011101001100011101100011110011000110110111100011110001000110011000011100101100100110"
+    },
+    "Group 10": {
+        "5B": "1110010110010001111010010100011111111000011010000111111110101000110001110101100101110111101001010011", 
+        "10B": "0010010110111001001101011101110010001010100110100100110011100001001000000110111000010010001100011110"
+    },
+    "Group 11": {
+        "1A": "1011000111110001101011010101101001000101110101010001100100000110001110101011000000010000100010100010", 
+        "10B": "1000110100010101010111001101101100110010111100001111001101001010101010011110111011101010111011100000"
+    },
+    "Group 12": { 
+        "5B": "1110100100101000010110011011011100100100011111010101111000000110111101010111101101100111100000100001", 
+        "5A": "0000000110110110110111001011101011011010010101100110101000011110110000101010111110011100111010100111"
+    },
+    "Group 13": {
+        "1A": "1110111011111100011101111110001001000010101010100100100001011111100000110001011100011000001110000010", 
+        "10A": "0001000100000011100010000001110110111101010101011011011110100000011111001110100011100011010011010101"
+    },
+    "Group 14": {
+        "1A": "0001111101100010100001101110101000101100010110000010100110110001110011101000000000110010110001000100", 
+        "20": "0111110111001101100010000001001001110100101101010101111111111111100001100111000001001100110111010111"
+    },
+    "Group 15": {
+        "1B": "0011100011111100011111000010010111000101001101000010111011000011001010110001111001010110100110000101", 
+        "5B": "0011001011101001110111100000011011111101111110011100010011010000010000010111101111010010101000000101"
+    }
+}
+# =====================================================
+
+def calculate_cumulative(flips_string):
+    """Calculates running totals directly from the string."""
+    heads_cum = []
+    tails_cum = []
+    h_count, t_count = 0, 0
+
+    for char in flips_string:
+        if char == '1':
+            h_count += 1
+        elif char == '0':
+            t_count += 1
+        
+        heads_cum.append(h_count)
+        tails_cum.append(t_count)
+
+    attempts = list(range(1, len(flips_string) + 1))
+    return attempts, heads_cum, tails_cum
+
+
+# ================= GENERATE & SAVE GRAPHS =================
+print("Starting graph generation...\n")
+
+for group_name, coins in group_data.items():
+    # Extract the coin labels dynamically (e.g., label1 = "1B", label2 = "1A")
+    labels = list(coins.keys())
+    label1 = labels[0]
+    label2 = labels[1]
+    
+    # Grab the string data
+    data1 = coins[label1]
+    data2 = coins[label2]
+    
+    # If the quotes are empty for this group, skip it and move to the next
+    if not data1 or not data2:
+        continue 
+        
+    print(f"Processing {group_name} ({label1} vs {label2})...")
+    
+    # Calculate totals
+    c1_att, c1_heads, c1_tails = calculate_cumulative(data1)
+    c2_att, c2_heads, c2_tails = calculate_cumulative(data2)
+
+    # Create the graph
+    plt.figure(figsize=(10, 6)) 
+
+    # Plot Coin 1 (Blue shades)
+    plt.plot(c1_att, c1_heads, label=f'{label1} Heads', color='#1f77b4', linewidth=2)
+    plt.plot(c1_att, c1_tails, label=f'{label1} Tails', color='#87ceeb', linestyle='--', linewidth=2)
+
+    # Plot Coin 2 (Red shades)
+    plt.plot(c2_att, c2_heads, label=f'{label2} Heads', color='#d62728', linewidth=2)
+    plt.plot(c2_att, c2_tails, label=f'{label2} Tails', color='#ff9896', linestyle='--', linewidth=2)
+
+    # Labels & Styling using the dynamic coin names
+    plt.title(f'{group_name}: Cumulative Comparison ({label1} vs {label2})', fontsize=14, fontweight='bold')
+    plt.xlabel('Toss Number', fontsize=12)
+    plt.ylabel('Cumulative Count', fontsize=12)
+    plt.legend()
+    plt.grid(True, linestyle=':', alpha=0.6)
+
+    # Save the graph as a PNG image, then close it to save memory
+    file_path = f"{folder_name}/{group_name.replace(' ', '_')}.png"
+    plt.savefig(file_path, bbox_inches='tight', dpi=150)
+    plt.close()
+
+print(f"\nAll done! Check the '{folder_name}' folder.")
